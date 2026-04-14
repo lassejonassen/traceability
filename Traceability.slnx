@@ -1,0 +1,10 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Traceability.Application/Traceability.Application.csproj" />
+    <Project Path="src/Traceability.Domain/Traceability.Domain.csproj" />
+    <Project Path="src/Traceability.Infrastructure/Traceability.Infrastructure.csproj" />
+    <Project Path="src/Traceability.SharedKernel/Traceability.SharedKernel.csproj" />
+    <Project Path="src/Traceability.WebAPI/Traceability.WebAPI.csproj" />
+    <Project Path="src/WebAPI.Contracts/WebAPI.Contracts.csproj" Id="367355c8-dc9f-4e7a-8464-66f779f1ddbf" />
+  </Folder>
+</Solution>

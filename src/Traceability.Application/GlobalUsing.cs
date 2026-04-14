@@ -1,0 +1,1 @@
+﻿global using Traceability.SharedKernel.Messaging;
