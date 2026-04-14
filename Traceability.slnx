@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/sim/">
+    <Project Path="sim/Traceability.SIM.WorkerService/Traceability.SIM.WorkerService.csproj" Id="b2d90cf7-608b-4120-98da-18ffe588b00c" />
+  </Folder>
   <Folder Name="/src/">
     <Project Path="src/Traceability.Application/Traceability.Application.csproj" />
     <Project Path="src/Traceability.Domain/Traceability.Domain.csproj" />
