@@ -6,11 +6,18 @@ namespace Traceability.WebAPI.Controllers;
 [Route("api/traces")]
 public class TraceController : BaseController
 {
-    [ProducesResponseType(typeof(Guid), StatusCodes.Status200OK)]
-    [HttpGet("{productionRequestId}")]
-    public async Task<IActionResult> Post([FromRoute] string productionRequestId, CancellationToken cancellationToken)
+    [HttpGet("tree/{productionRequestId:guid}")]
+    public async Task<IActionResult> GetTree([FromRoute] Guid productionRequestId, CancellationToken cancellationToken)
     {
         var result = await Mediator.Send(new GetProductionEventTraceQuery(productionRequestId), cancellationToken);
+
+        return Ok(result);
+    }
+
+    [HttpGet("{productionRequestId:guid}")]
+    public async Task<IActionResult> GetAll([FromRoute] Guid productionRequestId, CancellationToken cancellationToken)
+    {
+        var result = await Mediator.Send(new GetProductionEventsByProductionRequestIdQuery(productionRequestId), cancellationToken);
 
         return Ok(result);
     }

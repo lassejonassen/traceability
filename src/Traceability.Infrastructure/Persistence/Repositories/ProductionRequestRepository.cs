@@ -19,8 +19,8 @@ internal sealed class ProductionRequestRepository(ApplicationDbContext context)
         return await DbContext.Set<ProductionRequest>().FirstOrDefaultAsync(e => e.RequestId == name, cancellationToken); throw new NotImplementedException();
     }
 
-    public Task<ProductionRequest?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+    public async Task<ProductionRequest?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        return await DbContext.Set<ProductionRequest>().FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
     }
 }
