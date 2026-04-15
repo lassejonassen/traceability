@@ -14,5 +14,9 @@ internal sealed class SegmentResponseConfiguration : IEntityTypeConfiguration<Se
 
         builder.Property(e => e.Id)
             .ValueGeneratedNever();
+
+        builder.HasOne(e => e.ProcessSegment)
+            .WithMany(e => e.SegmentResponses)
+            .HasForeignKey(e => e.ProcessSegmentId);
     }
 }

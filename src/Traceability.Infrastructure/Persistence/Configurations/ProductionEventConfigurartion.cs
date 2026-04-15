@@ -21,5 +21,10 @@ internal sealed class ProductionEventConfigurartion : IEntityTypeConfiguration<P
             .HasConversion(new EnumToStringConverter<ProductionEventType>())
             .HasDefaultValue(ProductionEventType.ProductionData)
             .IsRequired(true);
+
+        builder.HasMany(e => e.ProductionEventAttributes)
+            .WithOne(e => e.ProductionEvent)
+            .HasForeignKey(e => e.ProductionEventId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

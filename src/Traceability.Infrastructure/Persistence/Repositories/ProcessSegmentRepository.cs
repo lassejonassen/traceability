@@ -16,7 +16,7 @@ internal sealed class ProcessSegmentRepository(ApplicationDbContext context)
 
     public async Task<ProcessSegment?> GetAsync(string name, CancellationToken cancellationToken)
     {
-        return await DbContext.Set<ProcessSegment>().FirstOrDefaultAsync(e => e.Name == name, cancellationToken);
+        return await DbContext.Set<ProcessSegment>().FirstOrDefaultAsync(e => e.ProcessSegmentId == name, cancellationToken);
     }
 
     public Task<ProcessSegment?> GetByIdAsync(Guid id, CancellationToken cancellationToken)

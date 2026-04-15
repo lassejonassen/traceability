@@ -1,4 +1,5 @@
-﻿using Traceability.Domain.SegmentResponses.Errors;
+﻿using Traceability.Domain.ProcessSegments.Entities;
+using Traceability.Domain.SegmentResponses.Errors;
 
 namespace Traceability.Domain.SegmentResponses.Entities;
 
@@ -8,7 +9,9 @@ public sealed class SegmentResponse : BaseEntity
     private SegmentResponse(DateTimeOffset utcNow) : base(utcNow) { }
 
     public Guid ProcessSegmentId { get; private set; }
-    public string SegmentId { get; private set; } = string.Empty;
+    public ProcessSegment ProcessSegment { get; } = null!;
+
+    public string SegmentResponseId { get; private set; } = string.Empty;
 
     public static Result<SegmentResponse> Create(string responseId, Guid processSegmentId, DateTimeOffset utcNow)
     {
@@ -19,7 +22,7 @@ public sealed class SegmentResponse : BaseEntity
 
         var segmentResponse = new SegmentResponse(utcNow)
         {
-            SegmentId = responseId,
+            SegmentResponseId = responseId,
             ProcessSegmentId = processSegmentId
         };
 

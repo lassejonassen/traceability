@@ -8,7 +8,6 @@ using Traceability.Domain.ProductionRequests.Entities;
 using Traceability.Domain.ProductionSchedules.Entities;
 using Traceability.Domain.SegmentRequirements.Entities;
 using Traceability.Domain.SegmentResponses.Entities;
-using Traceability.SharedKernel;
 
 namespace Traceability.Domain.ProductionEvents.Entities;
 
@@ -38,6 +37,9 @@ public sealed class ProductionEvent : BaseEntity
     public Location Location { get; } = null!;
     public double Quantity { get; private set; }
     public string UnitOfMeasure { get; private set; } = string.Empty;
+
+    private readonly List<ProductionEventAttribute> _productionEventAttributes = [];
+    public IReadOnlyList<ProductionEventAttribute> ProductionEventAttributes => _productionEventAttributes.AsReadOnly();
 
     public static Result<ProductionEvent> Create(CreateProductionEventDTO Dto, DateTimeOffset utcNow)
     {

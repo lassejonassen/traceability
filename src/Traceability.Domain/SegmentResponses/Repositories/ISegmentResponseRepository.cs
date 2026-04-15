@@ -5,6 +5,7 @@ namespace Traceability.Domain.SegmentResponses.Repositories;
 public interface ISegmentResponseRepository : IBaseRepository<SegmentResponse>
 {
     Task<IReadOnlyList<SegmentResponse>> GetAllAsync(CancellationToken cancellationToken);
+    Task<IReadOnlyList<SegmentResponse>> GetAllInTimeRangeAsync(DateTime startTimeUtc, DateTime endTimeUtc, CancellationToken cancellationToken);
     Task<SegmentResponse?> GetAsync(string segmentId, CancellationToken cancellationToken);
     Task<SegmentResponse?> GetByIdAsync(Guid id, CancellationToken cancellationToken);
 }

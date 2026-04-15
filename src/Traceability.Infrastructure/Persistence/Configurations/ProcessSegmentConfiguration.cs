@@ -15,7 +15,12 @@ internal sealed class ProcessSegmentConfiguration : IEntityTypeConfiguration<Pro
         builder.Property(e => e.Id)
             .ValueGeneratedNever();
 
-        builder.Property(e => e.Name)
+        builder.Property(e => e.ProcessSegmentId)
             .IsRequired(true);
+
+        builder.HasMany(e => e.SegmentResponses)
+            .WithOne(e => e.ProcessSegment)
+            .HasForeignKey(e => e.ProcessSegmentId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

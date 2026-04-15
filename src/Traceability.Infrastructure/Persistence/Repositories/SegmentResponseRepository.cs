@@ -13,9 +13,16 @@ internal sealed class SegmentResponseRepository(ApplicationDbContext context)
         throw new NotImplementedException();
     }
 
+    public async Task<IReadOnlyList<SegmentResponse>> GetAllInTimeRangeAsync(DateTime startTimeUtc, DateTime endTimeUtc, CancellationToken cancellationToken)
+    {
+        return await DbContext.Set<SegmentResponse>()
+            .Include(e => e.ProcessSegment)
+            .ToListAsync(cancellationToken);
+    }
+
     public async Task<SegmentResponse?> GetAsync(string name, CancellationToken cancellationToken)
     {
-        return await DbContext.Set<SegmentResponse>().FirstOrDefaultAsync(e => e.SegmentId == name, cancellationToken); throw new NotImplementedException();
+        return await DbContext.Set<SegmentResponse>().FirstOrDefaultAsync(e => e.SegmentResponseId == name, cancellationToken); throw new NotImplementedException();
     }
 
     public Task<SegmentResponse?> GetByIdAsync(Guid id, CancellationToken cancellationToken)

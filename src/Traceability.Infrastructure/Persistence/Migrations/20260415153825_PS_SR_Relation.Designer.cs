@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Traceability.Infrastructure.Persistence.DbContexts;
 
@@ -11,9 +12,11 @@ using Traceability.Infrastructure.Persistence.DbContexts;
 namespace Traceability.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260415153825_PS_SR_Relation")]
+    partial class PS_SR_Relation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -90,7 +93,7 @@ namespace Traceability.Infrastructure.Persistence.Migrations
                     b.Property<DateTimeOffset>("CreatedAtUtc")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<string>("ProcessSegmentId")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -166,40 +169,6 @@ namespace Traceability.Infrastructure.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ProductionEvents", (string)null);
-                });
-
-            modelBuilder.Entity("Traceability.Domain.ProductionEvents.Entities.ProductionEventAttribute", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTimeOffset>("CreatedAtUtc")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("NumericValue")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("float")
-                        .HasDefaultValue(0.0);
-
-                    b.Property<Guid>("ProductionEventId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTimeOffset>("UpdatedAtUtc")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("Value")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductionEventId");
-
-                    b.ToTable("ProductionEventAttributes", (string)null);
                 });
 
             modelBuilder.Entity("Traceability.Domain.ProductionRequests.Entities.ProductionRequest", b =>
@@ -287,17 +256,6 @@ namespace Traceability.Infrastructure.Persistence.Migrations
                     b.ToTable("SegmentResponses", (string)null);
                 });
 
-            modelBuilder.Entity("Traceability.Domain.ProductionEvents.Entities.ProductionEventAttribute", b =>
-                {
-                    b.HasOne("Traceability.Domain.ProductionEvents.Entities.ProductionEvent", "ProductionEvent")
-                        .WithMany("ProductionEventAttributes")
-                        .HasForeignKey("ProductionEventId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ProductionEvent");
-                });
-
             modelBuilder.Entity("Traceability.Domain.SegmentResponses.Entities.SegmentResponse", b =>
                 {
                     b.HasOne("Traceability.Domain.ProcessSegments.Entities.ProcessSegment", "ProcessSegment")
@@ -312,11 +270,6 @@ namespace Traceability.Infrastructure.Persistence.Migrations
             modelBuilder.Entity("Traceability.Domain.ProcessSegments.Entities.ProcessSegment", b =>
                 {
                     b.Navigation("SegmentResponses");
-                });
-
-            modelBuilder.Entity("Traceability.Domain.ProductionEvents.Entities.ProductionEvent", b =>
-                {
-                    b.Navigation("ProductionEventAttributes");
                 });
 #pragma warning restore 612, 618
         }

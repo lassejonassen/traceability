@@ -41,7 +41,7 @@ public sealed class GetProductionEventsByProductionRequestIdQueryHandler(
             ProductionScheduleId = e.ProductionSchedule.ScheduleId,
             Quantity = e.Quantity.ToString(),
             SegmentRequirementId = e.SegmentRequirement.RequirementId,
-            SegmentResponseId = e.SegmentResponse.SegmentId,
+            SegmentResponseId = e.SegmentResponse.SegmentResponseId,
             SubLot = e.SubLot,
             UnitOfMeasure = e.UnitOfMeasure
         }).ToList();
