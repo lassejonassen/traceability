@@ -37,13 +37,19 @@ public sealed class ProductionEvent : BaseEntity
     public Location Location { get; } = null!;
     public double Quantity { get; private set; }
     public string UnitOfMeasure { get; private set; } = string.Empty;
+    public Guid ParentProductionEventId { get; private set; }
+    public ProductionEvent ParentProductionEvent { get; } = null!;
+    private readonly List<ProductionEvent> _childProductionEvents = [];
+    public IReadOnlyList<ProductionEvent> ChildProductionEvents => _childProductionEvents.AsReadOnly();
+    public string Operator { get; private set;  } = string.Empty;
+    public DateTime TimeStamp { get; private set; }
 
     private readonly List<ProductionEventAttribute> _productionEventAttributes = [];
     public IReadOnlyList<ProductionEventAttribute> ProductionEventAttributes => _productionEventAttributes.AsReadOnly();
 
-    public static Result<ProductionEvent> Create(CreateProductionEventDTO Dto, DateTimeOffset utcNow)
+    public static Result<ProductionEvent> Create(CreateProductionEventDTO dto, DateTimeOffset utcNow)
     {
-        var productionEventType = GetProductionEventType(Dto.ProductionEventType);
+        var productionEventType = GetProductionEventType(dto.ProductionEventType);
         if (productionEventType.IsFailure)
         {
             return Result.Failure<ProductionEvent>(productionEventType.Error);
@@ -51,20 +57,23 @@ public sealed class ProductionEvent : BaseEntity
 
         var productionEvent = new ProductionEvent(utcNow)
         {
-            ProductionScheduleId = Dto.ProductionSchedule,
-            ProductionRequestId = Dto.ProductionRequest,
-            SegmentRequirementId = Dto.SegmentRequirement,
-            SegmentResponseId = Dto.SegmentResponse,
+            ProductionScheduleId = dto.ProductionSchedule,
+            ProductionRequestId = dto.ProductionRequest,
+            SegmentRequirementId = dto.SegmentRequirement,
+            SegmentResponseId = dto.SegmentResponse,
             ProductionEventType = productionEventType.Value,
-            EventId = Dto.EventId,
-            MaterialId = Dto.Material,
-            EquipmentId = Dto.Equipment,
-            LocationId = Dto.Location,
-            Lot = Dto.Lot,
-            SubLot = Dto.SubLot,
-            Comment = Dto.Comment,
-            Quantity = Dto.Quantity,
-            UnitOfMeasure = Dto.UnitOfMeasure
+            EventId = dto.EventId,
+            MaterialId = dto.Material,
+            EquipmentId = dto.Equipment,
+            LocationId = dto.Location,
+            Lot = dto.Lot,
+            SubLot = dto.SubLot,
+            Comment = dto.Comment,
+            Quantity = dto.Quantity,
+            UnitOfMeasure = dto.UnitOfMeasure,
+            ParentProductionEventId = dto.ParentProductionEventId,
+            Operator = dto.Operator,
+            TimeStamp = dto.TimeStamp,
         };
 
         return Result.Success(productionEvent);

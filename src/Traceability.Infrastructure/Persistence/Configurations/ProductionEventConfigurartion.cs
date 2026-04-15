@@ -26,5 +26,12 @@ internal sealed class ProductionEventConfigurartion : IEntityTypeConfiguration<P
             .WithOne(e => e.ProductionEvent)
             .HasForeignKey(e => e.ProductionEventId)
             .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasOne(e => e.ParentProductionEvent)
+            .WithMany(e => e.ChildProductionEvents)
+            .HasForeignKey(e => e.ParentProductionEventId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.HasIndex(e => e.ParentProductionEventId);
     }
 }
